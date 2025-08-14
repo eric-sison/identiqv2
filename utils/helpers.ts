@@ -21,3 +21,12 @@ export const createEnv = () => {
     process.exit(1);
   }
 };
+
+export const isValidUrl = (str: string) => {
+  try {
+    const url = new URL(str);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
