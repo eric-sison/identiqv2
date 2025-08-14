@@ -61,61 +61,73 @@ export class OIDCProvider {
   public validateConfiguration() {
     // Issuer is a required field
     if (!this.options.issuer) {
-      throw new OIDCConfigurationError("missing_issuer", "issuer is required!");
+      throw new OIDCConfigurationError(
+        "missing_issuer",
+        "The 'issuer' value is missing in the OIDC provider configuration.",
+      );
     }
 
     // Issuer must be a valid url
     if (!isValidUrl(this.options.issuer)) {
       throw new OIDCConfigurationError(
         "invalid_issuer_url",
-        `issuer must be a valid url: ${this.options.issuer}.`,
+        `The provided 'issuer' value ("${this.options.issuer}") is not a valid URL.`,
       );
     }
 
     if (!this.options.authorizationEndpoint) {
       throw new OIDCConfigurationError(
         "missing_authorization_endpoint",
-        "authorization_endpoint is required!",
+        "The 'authorization_endpoint' is missing in the OIDC provider configuration.",
       );
     }
 
     if (!isValidUrl(this.options.authorizationEndpoint)) {
       throw new OIDCConfigurationError(
         "invalid_authorization_endpoint_url",
-        `authorization_endpoint must be a valid url: ${this.options.authorizationEndpoint}.`,
+        `The 'authorization_endpoint' value ("${this.options.authorizationEndpoint}") is not a valid URL.`,
       );
     }
 
     if (!this.options.tokenEndpoint) {
-      throw new OIDCConfigurationError("missing_token_endpoint", "token_endpoint is required!");
+      throw new OIDCConfigurationError(
+        "missing_token_endpoint",
+        "The 'token_endpoint' is missing in the OIDC provider configuration.",
+      );
     }
 
     if (!isValidUrl(this.options.tokenEndpoint)) {
       throw new OIDCConfigurationError(
         "invalid_token_endpoint_url",
-        `token_endpoint must be a valid url: ${this.options.tokenEndpoint}.`,
+        `The 'token_endpoint' value ("${this.options.tokenEndpoint}") is not a valid URL.`,
       );
     }
 
     if (!this.options.userInfoEndpoint) {
-      throw new OIDCConfigurationError("missing_userinfo_endpoint", "userinfo_endpoint is required!");
+      throw new OIDCConfigurationError(
+        "missing_userinfo_endpoint",
+        "The 'userinfo_endpoint' is missing in the OIDC provider configuration.",
+      );
     }
 
     if (!isValidUrl(this.options.userInfoEndpoint)) {
       throw new OIDCConfigurationError(
         "invalid_userinfo_endpoint_url",
-        `userinfo_endpoint must be a valid url: ${this.options.userInfoEndpoint}`,
+        `The 'userinfo_endpoint' value ("${this.options.userInfoEndpoint}") is not a valid URL.`,
       );
     }
 
     if (!this.options.jwksUri) {
-      throw new OIDCConfigurationError("missing_jwks_uri", "jwks_uri is required!");
+      throw new OIDCConfigurationError(
+        "missing_jwks_uri",
+        "The 'jwks_uri' is missing in the OIDC provider configuration.",
+      );
     }
 
     if (!isValidUrl(this.options.jwksUri)) {
       throw new OIDCConfigurationError(
         "invalid_jwks_uri",
-        `jwks_uri must be a valid url: ${this.options.jwksUri}`,
+        `The 'jwks_uri' value ("${this.options.jwksUri}") is not a valid URL.`,
       );
     }
 
