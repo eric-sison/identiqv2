@@ -1,3 +1,6 @@
+import z from "zod";
+import { AuthorizationRequestSchema } from "../validators/authorization";
+
 export type OIDCSubjectType = "public" | "pairwise";
 export type OIDCIdTokenSigningAlgValue = "RS256" | "HS256" | "ES256" | "PS256" | "none";
 export type OIDCScope = "openid" | "profile" | "email" | "address" | "phone" | "offline_access";
@@ -74,3 +77,5 @@ export type DiscoveryDocument = {
   token_endpoint_auth_methods_supported?: OIDCTokenEndpointAuthMethod[];
   code_challenge_methods_supported?: OIDCCodeChallengeMethod[];
 };
+
+export type AuthorizationRequest = z.infer<typeof AuthorizationRequestSchema>;

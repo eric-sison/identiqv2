@@ -1,1 +1,3 @@
-export class AuthorizationService {}
+export class AuthorizationService {
+  constructor() {}
+}
