@@ -4,8 +4,8 @@ export class OIDCConfigurationError extends Error {
   constructor(
     public readonly error: OIDCConfigurationErrorCode,
     public readonly description: string,
-    public readonly uri?: string,
     public readonly statusCode?: number,
+    public readonly uri?: string,
   ) {
     super(description || error);
     this.name = "OIDCConfigurationError";

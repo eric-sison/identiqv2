@@ -10,8 +10,7 @@ export type OIDCConfigurationErrorCode =
   | "missing_jwks_uri"
   | "invalid_jwks_uri"
   | "missing_openid_scope"
-  | "invalid_response_type"
-  | "empty_scopes"
+  | "empty_scope"
   | "empty_claims";
 
 export type OIDCErrorResponse = {
