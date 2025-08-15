@@ -54,7 +54,7 @@ export type OIDCProviderOptions = {
   userInfoEndpoint: string;
   scopesSupported: OIDCScope[];
   claimsSupported: OIDCClaim[];
-  responseTypesSupported?: OIDCResponseType[];
+  responseTypesSupported: OIDCResponseType[];
   grantTypesSupported?: OIDCGrantType[];
   subjectTypesSupported?: OIDCSubjectType[];
   idTokenSigningAlgValuesSupported?: OIDCIdTokenSigningAlgValue[];

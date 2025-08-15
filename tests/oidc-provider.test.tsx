@@ -12,6 +12,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -31,6 +32,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -51,6 +53,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -70,6 +73,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -109,6 +113,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "<invalid-url>", //! test case: invalid token_endpoint url
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -129,6 +134,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         // userInfoEndpoint: "http://localhost:3000/api/userinfo", //! test case: no userinfo_endpoint field
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -149,6 +155,7 @@ describe("Test OIDC Provider field validation", () => {
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "<invalid-url>", //! test case: invalid userinfo_endpoint field
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
+        responseTypesSupported: ["code"],
         claimsSupported: ["address"],
       });
 
@@ -187,6 +194,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "<invalid-url>", //! test case: invalid jwks_uri field
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
         claimsSupported: ["address"],
       });
@@ -206,6 +214,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["address", "email", "offline_access", "phone", "profile"], //! test case: no openid scope
         claimsSupported: ["address"],
       });
@@ -225,6 +234,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: [],
         claimsSupported: ["address"],
       });
@@ -244,6 +254,7 @@ describe("Test OIDC Provider field validation", () => {
         tokenEndpoint: "http://localhost:3000/api/tokens",
         jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
         userInfoEndpoint: "http://localhost:3000/api/userinfo",
+        responseTypesSupported: ["code"],
         scopesSupported: ["openid"],
         claimsSupported: [],
       });
@@ -264,6 +275,15 @@ describe("Test OIDC Provider setup", () => {
       tokenEndpoint: "http://localhost:3000/api/tokens",
       jwksUri: "http://localhost:3000/api/.well-known/jwks.json",
       userInfoEndpoint: "http://localhost:3000/api/userinfo",
+      responseTypesSupported: [
+        "code",
+        "code id_token",
+        "code id_token token",
+        "code token",
+        "id_token",
+        "id_token token",
+        "token",
+      ],
       scopesSupported: ["openid", "address", "email", "offline_access", "phone", "profile"],
       claimsSupported: ["address"],
     });

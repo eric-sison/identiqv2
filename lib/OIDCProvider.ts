@@ -21,7 +21,7 @@ export class OIDCProvider {
   private userinfoEndpoint: string;
   private scopesSupported: OIDCScope[];
   private claimsSupported: OIDCClaim[];
-  private responseTypesSupported?: OIDCResponseType[];
+  private responseTypesSupported: OIDCResponseType[];
   private grantTypesSupported?: OIDCGrantType[];
   private subjectTypesSupported?: OIDCSubjectType[];
   private idTokenSigningAlgValuesSupported?: OIDCIdTokenSigningAlgValue[];
@@ -36,15 +36,7 @@ export class OIDCProvider {
     this.scopesSupported = options.scopesSupported;
     this.claimsSupported = options.claimsSupported;
     this.userinfoEndpoint = options.userInfoEndpoint;
-    this.responseTypesSupported = options.responseTypesSupported ?? [
-      "code",
-      "code id_token",
-      "code id_token token",
-      "code token",
-      "id_token",
-      "id_token token",
-      "token",
-    ];
+    this.responseTypesSupported = options.responseTypesSupported;
     this.grantTypesSupported = options.grantTypesSupported ?? [
       "authorization_code",
       "client_credentials",
