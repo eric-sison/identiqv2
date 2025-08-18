@@ -7,9 +7,9 @@ import {
   SelectClientScope,
   UpdateClient,
 } from "./types/oidc";
-import db from "@/db/connection";
 import { generateClientSecret, paginate } from "@/utils/helpers";
-import { count, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import db from "@/db/connection";
 
 export class ClientRepository {
   async create(clientData: ClientData): Promise<Client> {
