@@ -1,5 +1,23 @@
 import z from "zod";
 import { AuthorizationRequestSchema } from "../validators/authorization";
+import {
+  ClientDataSchema,
+  InsertClientGrantTypeSchema,
+  InsertClientRedirectURISchema,
+  InsertClientSchema,
+  InsertClientScopeSchema,
+  InsertOAuthScopeSchema,
+  SelectClientGrantTypeSchema,
+  SelectClientRedirectURISchema,
+  SelectClientSchema,
+  SelectClientScopeSchema,
+  SelectOAuthScopeSchema,
+  UpdateClientGrantTypeSchema,
+  UpdateClientRedirectURISchema,
+  UpdateClientSchema,
+  UpdateClientScopeSchema,
+  UpdateOAuthScopeSchema,
+} from "@/db/schemas/client";
 
 export type OIDCSubjectType = "public" | "pairwise";
 export type OIDCIdTokenSigningAlgValue = "RS256" | "HS256" | "ES256" | "PS256" | "none";
@@ -79,3 +97,32 @@ export type DiscoveryDocument = {
 };
 
 export type AuthorizationRequest = z.infer<typeof AuthorizationRequestSchema>;
+
+export type SelectClient = z.infer<typeof SelectClientSchema>;
+export type InsertClient = z.infer<typeof InsertClientSchema>;
+export type UpdateClient = z.infer<typeof UpdateClientSchema>;
+
+export type SelectOAuthScope = z.infer<typeof SelectOAuthScopeSchema>;
+export type InsertOAuthScope = z.infer<typeof InsertOAuthScopeSchema>;
+export type UpdateOAuthScope = z.infer<typeof UpdateOAuthScopeSchema>;
+
+export type SelectClientRedirectURI = z.infer<typeof SelectClientRedirectURISchema>;
+export type InsertClientRedirectURI = z.infer<typeof InsertClientRedirectURISchema>;
+export type UpdateClientRedirectURI = z.infer<typeof UpdateClientRedirectURISchema>;
+
+export type SelectClientScope = z.infer<typeof SelectClientScopeSchema>;
+export type InsertClientScope = z.infer<typeof InsertClientScopeSchema>;
+export type UpdateClientScope = z.infer<typeof UpdateClientScopeSchema>;
+
+export type SelectClientGrantType = z.infer<typeof SelectClientGrantTypeSchema>;
+export type InsertClientGrantType = z.infer<typeof InsertClientGrantTypeSchema>;
+export type UpdateClientGrantType = z.infer<typeof UpdateClientGrantTypeSchema>;
+
+export type ClientData = z.infer<typeof ClientDataSchema>;
+
+export type Client = {
+  client: SelectClient;
+  scopes: SelectClientScope[];
+  redirectURIs: SelectClientRedirectURI[];
+  grantTypes: SelectClientGrantType[];
+};

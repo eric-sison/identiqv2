@@ -1,6 +1,7 @@
+import { Pool } from "pg";
 import { createEnv } from "../utils/helpers";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import * as schema from "@/db/schemas/client";
 
 const env = createEnv();
 
@@ -16,6 +17,7 @@ const pool = new Pool({
 const db = drizzle({
   client: pool,
   logger: true,
+  schema,
 });
 
 export default db;

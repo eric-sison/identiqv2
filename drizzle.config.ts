@@ -7,9 +7,9 @@ export default defineConfig({
   dbCredentials: {
     host: "localhost",
     port: 5432,
-    user: "admin",
-    password: "my_password",
-    database: "authn",
+    user: "myuser",
+    password: "mypassword",
+    database: "mydb",
     ssl: false,
   },
 });
