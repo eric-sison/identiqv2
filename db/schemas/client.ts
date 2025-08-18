@@ -1,4 +1,5 @@
 import { relations, sql } from "drizzle-orm";
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from "drizzle-zod";
 import {
   boolean,
   integer,
@@ -10,7 +11,6 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema, createSelectSchema, createUpdateSchema } from "drizzle-zod";
 import z from "zod";
 
 export const clientTypeEnum = pgEnum("client_type_enum", ["confidential", "public"]);
@@ -136,14 +136,14 @@ export const clientScopesRelations = relations(clientScopes, ({ one }) => ({
   }),
 }));
 
-export const clientRedirectURIRelations = relations(clientRedirectURIs, ({ one }) => ({
+export const clientRedirectURIsRelations = relations(clientRedirectURIs, ({ one }) => ({
   client: one(clients, {
     fields: [clientRedirectURIs.clientId],
     references: [clients.id],
   }),
 }));
 
-export const clientGrantTypeRelations = relations(clientGrantTypes, ({ one }) => ({
+export const clientGrantTypesRelations = relations(clientGrantTypes, ({ one }) => ({
   client: one(clients, {
     fields: [clientGrantTypes.clientId],
     references: [clients.id],
