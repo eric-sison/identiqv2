@@ -1,5 +1,5 @@
 import { OIDCConfigurationError } from "./OIDCConfigurationError";
-import { isValidUrl } from "@/utils/helpers";
+import { isValidUrl } from "@/utils";
 import {
   DiscoveryDocument,
   OIDCClaim,

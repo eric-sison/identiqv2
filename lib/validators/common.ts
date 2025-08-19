@@ -9,6 +9,7 @@ export const EnvSchema = z.object({
   DB_USER: z.string(),
   DB_PASS: z.string(),
   DB_NAME: z.string(),
+  CLIENT_SECRET_ENCRYPTION_KEY: z.string(),
 });
 
 export const PaginatedSchema = z.object({

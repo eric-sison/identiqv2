@@ -1,4 +1,3 @@
-import { clientGrantTypes, clientRedirectURIs, clients, clientScopes } from "@/db/schemas/client";
 import {
   Client,
   ClientData,
@@ -7,12 +6,15 @@ import {
   SelectClientScope,
   UpdateClient,
 } from "./types/oidc";
-import { generateClientSecret } from "@/utils/helpers";
-import { eq } from "drizzle-orm";
+import { clientGrantTypes, clientRedirectURIs, clients, clientScopes } from "@/db/schemas/client";
+import { createEnv, generateClientSecret } from "@/utils";
 import { paginate } from "@/utils/paginate";
+import { eq } from "drizzle-orm";
 import db from "@/db/connection";
 
 export class ClientRepository {
+  private readonly env = createEnv();
+
   async create(clientData: ClientData): Promise<Client> {
     const { client, options } = clientData;
 
@@ -26,7 +28,13 @@ export class ClientRepository {
       // Confidential clients receive a generated secret; public clients do not
       const newClient = await tx
         .insert(clients)
-        .values({ ...client, secret: client.clientType === "confidential" ? generateClientSecret() : null })
+        .values({
+          ...client,
+          secret:
+            client.clientType === "confidential"
+              ? generateClientSecret(this.env.CLIENT_SECRET_ENCRYPTION_KEY, 32)
+              : null,
+        })
         .returning();
       const clientId = newClient[0].id;
 
@@ -121,6 +129,7 @@ export class ClientRepository {
           },
           with: {
             scope: {
+              // pull in scope details
               columns: {
                 id: true,
                 name: true,
@@ -128,11 +137,21 @@ export class ClientRepository {
                 isActive: true,
                 isDefault: true,
               },
-            }, // pull in scope details
+            },
           },
         },
-        redirectURIs: true,
-        grantTypes: true,
+        redirectURIs: {
+          columns: {
+            clientId: false,
+            createdAt: false,
+            updatedAt: false,
+          },
+        },
+        grantTypes: {
+          columns: {
+            clientId: false,
+          },
+        },
       },
     });
 
