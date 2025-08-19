@@ -3,10 +3,17 @@ import {
   ClientData,
   SelectClientGrantType,
   SelectClientRedirectURI,
+  SelectClientResponseType,
   SelectClientScope,
   UpdateClient,
 } from "./types/oidc";
-import { clientGrantTypes, clientRedirectURIs, clients, clientScopes } from "@/db/schemas/client";
+import {
+  clientGrantTypes,
+  clientRedirectURIs,
+  clientResponseTypes,
+  clients,
+  clientScopes,
+} from "@/db/schemas/client";
 import { createEnv, generateClientSecret } from "@/utils";
 import { paginate } from "@/utils/paginate";
 import { eq } from "drizzle-orm";
@@ -22,6 +29,7 @@ export class ClientRepository {
     let scopes: SelectClientScope[] = [];
     let redirectURIs: SelectClientRedirectURI[] = [];
     let grantTypes: SelectClientGrantType[] = [];
+    let responseTypes: SelectClientResponseType[] = [];
 
     // Wrap operations in a transaction so all inserts succeed/fail together
     return await db.transaction(async (tx) => {
@@ -89,12 +97,29 @@ export class ClientRepository {
         grantTypes = newGrantTypes.flat();
       }
 
+      // --- Insert Response Types ---
+      if (options?.responseTypes) {
+        // Insert each response type for the client
+        const newResponseTypes = await Promise.all(
+          options.responseTypes.map(
+            async (responseType) =>
+              await tx
+                .insert(clientResponseTypes)
+                .values({ ...responseType, clientId })
+                .returning(),
+          ),
+        );
+
+        responseTypes = newResponseTypes.flat();
+      }
+
       // Return the result of the transaction (client + metadata)
       return {
         client: newClient[0],
         scopes,
         redirectURIs,
         grantTypes,
+        responseTypes,
       };
     });
   }
@@ -129,7 +154,6 @@ export class ClientRepository {
           },
           with: {
             scope: {
-              // pull in scope details
               columns: {
                 id: true,
                 name: true,
@@ -150,6 +174,15 @@ export class ClientRepository {
         grantTypes: {
           columns: {
             clientId: false,
+            createdAt: false,
+            updatedAt: false,
+          },
+        },
+        responseTypes: {
+          columns: {
+            clientId: false,
+            createdAt: false,
+            updatedAt: false,
           },
         },
       },

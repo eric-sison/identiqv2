@@ -104,7 +104,23 @@ export const clientScopes = pgTable(
     grantedAt: timestamp("granted_at", { withTimezone: true }).defaultNow(),
     grantedBy: varchar("granted_by"),
   },
-  (t) => [unique("unique_client_scope").on(t.clientId, t.scopeId)],
+  (t) => [unique("unique_client_id_scope").on(t.clientId, t.scopeId)],
+);
+
+export const clientResponseTypes = pgTable(
+  "client_response_types",
+  {
+    id: uuid("id").defaultRandom().primaryKey().notNull(),
+    clientId: uuid("client_id")
+      .references(() => clients.id, { onDelete: "cascade" })
+      .notNull(),
+    responseType: varchar("response_type", { length: 50 }).notNull(), // code, token, id_token, etc.
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .$onUpdateFn(() => sql`now()`),
+  },
+  (t) => [unique("unique_client_id_response_type").on(t.clientId, t.responseType)],
 );
 
 export const clientGrantTypes = pgTable(
@@ -115,14 +131,19 @@ export const clientGrantTypes = pgTable(
       .references(() => clients.id, { onDelete: "cascade" })
       .notNull(),
     grantType: varchar("grant_type", { length: 50 }).notNull(), // authorization_code, refresh_token, client_credentials
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .$onUpdateFn(() => sql`now()`),
   },
-  (t) => [unique().on(t.clientId, t.grantType)],
+  (t) => [unique("unique_client_id_grant_type").on(t.clientId, t.grantType)],
 );
 
 export const clientRelations = relations(clients, ({ many }) => ({
   scopes: many(clientScopes),
   redirectURIs: many(clientRedirectURIs),
   grantTypes: many(clientGrantTypes),
+  responseTypes: many(clientResponseTypes),
 }));
 
 export const clientScopesRelations = relations(clientScopes, ({ one }) => ({
@@ -150,6 +171,13 @@ export const clientGrantTypesRelations = relations(clientGrantTypes, ({ one }) =
   }),
 }));
 
+export const clientResponseTypesRelations = relations(clientResponseTypes, ({ one }) => ({
+  client: one(clients, {
+    fields: [clientResponseTypes.clientId],
+    references: [clients.id],
+  }),
+}));
+
 export const SelectClientSchema = createSelectSchema(clients);
 export const InsertClientSchema = createInsertSchema(clients);
 export const UpdateClientSchema = createUpdateSchema(clients);
@@ -172,6 +200,10 @@ export const SelectClientGrantTypeSchema = createSelectSchema(clientGrantTypes);
 export const InsertClientGrantTypeSchema = createInsertSchema(clientGrantTypes);
 export const UpdateClientGrantTypeSchema = createUpdateSchema(clientGrantTypes);
 
+export const SelectClientReponseTypeSchema = createSelectSchema(clientResponseTypes);
+export const InsertClientResponseTypeSchema = createInsertSchema(clientResponseTypes);
+export const UpdateClientResponseTypeSchema = createUpdateSchema(clientResponseTypes);
+
 export const ClientDataSchema = z.object({
   client: InsertClientSchema.omit({ id: true, secret: true }),
   options: z
@@ -179,6 +211,7 @@ export const ClientDataSchema = z.object({
       scopes: z.array(InsertClientScopeSchema.omit({ id: true, clientId: true })).optional(),
       redirectURIs: z.array(InsertClientRedirectURISchema.omit({ id: true, clientId: true })).optional(),
       grantTypes: z.array(InsertClientGrantTypeSchema.omit({ id: true, clientId: true })).optional(),
+      responseTypes: z.array(InsertClientResponseTypeSchema.omit({ id: true, clientId: true })).optional(),
     })
     .optional(),
 });

@@ -4,16 +4,19 @@ import {
   ClientDataSchema,
   InsertClientGrantTypeSchema,
   InsertClientRedirectURISchema,
+  InsertClientResponseTypeSchema,
   InsertClientSchema,
   InsertClientScopeSchema,
   InsertOAuthScopeSchema,
   SelectClientGrantTypeSchema,
   SelectClientRedirectURISchema,
+  SelectClientReponseTypeSchema,
   SelectClientSchema,
   SelectClientScopeSchema,
   SelectOAuthScopeSchema,
   UpdateClientGrantTypeSchema,
   UpdateClientRedirectURISchema,
+  UpdateClientResponseTypeSchema,
   UpdateClientSchema,
   UpdateClientScopeSchema,
   UpdateOAuthScopeSchema,
@@ -118,6 +121,10 @@ export type SelectClientGrantType = z.infer<typeof SelectClientGrantTypeSchema>;
 export type InsertClientGrantType = z.infer<typeof InsertClientGrantTypeSchema>;
 export type UpdateClientGrantType = z.infer<typeof UpdateClientGrantTypeSchema>;
 
+export type SelectClientResponseType = z.infer<typeof SelectClientReponseTypeSchema>;
+export type InsertClientResponseType = z.infer<typeof InsertClientResponseTypeSchema>;
+export type UpdateClientResponseType = z.infer<typeof UpdateClientResponseTypeSchema>;
+
 export type ClientData = z.infer<typeof ClientDataSchema>;
 
 export type Client = {
@@ -125,4 +132,5 @@ export type Client = {
   scopes: SelectClientScope[];
   redirectURIs: SelectClientRedirectURI[];
   grantTypes: SelectClientGrantType[];
+  responseTypes: SelectClientResponseType[];
 };
