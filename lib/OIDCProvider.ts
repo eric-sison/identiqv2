@@ -169,58 +169,6 @@ export class OIDCProvider {
     }
   }
 
-  public getIssuer() {
-    return this.issuer;
-  }
-
-  public getAuthorizationEndpoint() {
-    return this.authorizationEndpoint;
-  }
-
-  public getTokenEndpoint() {
-    return this.tokenEndpoint;
-  }
-
-  public getJwksUri() {
-    return this.jwksUri;
-  }
-
-  public getUserinfoEndpoint() {
-    return this.userinfoEndpoint;
-  }
-
-  public getScopesSupported() {
-    return this.scopesSupported;
-  }
-
-  public getClaimsSupported() {
-    return this.claimsSupported;
-  }
-
-  public getResponseTypesSupported() {
-    return this.responseTypesSupported;
-  }
-
-  public getGrantTypesSupported() {
-    return this.grantTypesSupported;
-  }
-
-  public getSubjectTypesSupported() {
-    return this.subjectTypesSupported;
-  }
-
-  public getIdTokenSigningAlgValuesSupported() {
-    return this.idTokenSigningAlgValuesSupported;
-  }
-
-  public getTokenEndpointAuthMethodsSupported() {
-    return this.tokenEndpointAuthMethodsSupported;
-  }
-
-  public getCodeChallengeMethodsSupported() {
-    return this.codeChallengeMethodsSupported;
-  }
-
   public getDiscoveryDocument(): DiscoveryDocument {
     return {
       issuer: this.issuer,
