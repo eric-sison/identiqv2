@@ -1,11 +1,10 @@
 import { Hono } from "hono";
 import { healthcheckHandler } from "./routes/healthcheck";
-import { clientsHandler } from "./routes/clientsHandler";
 
 function createApp() {
   const app = new Hono().basePath("/api");
 
-  const routes = [healthcheckHandler, clientsHandler] as const;
+  const routes = [healthcheckHandler] as const;
 
   routes.forEach((route) => app.route("/", route));
 
